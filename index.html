@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Kartenspiel Startseite</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="start-container">
+    <h2>Kartenspiel Lobby</h2>
+    <div class="lobby-controls">
+      <label>Benutzername:
+        <input type="text" id="username" placeholder="Dein Name">
+      </label>
+      <div class="room-buttons">
+        <button onclick="raumErstellen()">Raum erstellen</button>
+        <div class="join-controls">
+          <label>Raumcode:
+            <input type="text" id="raumcode" placeholder="z.B. ABC123">
+          </label>
+          <button onclick="raumBeitreten()">Raum beitreten</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="room-controls" style="display: none;">
+      <div id="room-display"></div>
+      <button id="startGame" onclick="startGame()" style="display: none;">Spiel starten</button>
+    </div>
+  </div>
+  <script src="lobby.js"></script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+html,
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.start-container {
+  max-width: 600px;
+  margin: 2em auto;
+  padding: 2em;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.lobby-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.room-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.join-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+#room-display {
+  margin-top: 2em;
+  padding: 1em;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+#room-display ul {
+  list-style: none;
+  padding: 0;
+}
+
+#room-display li {
+  padding: 0.5em;
+  background: white;
+  margin: 0.5em 0;
+  border-radius: 4px;
+}
+
+#phasen {
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+  margin: 2em 0;
+}
+
+.phase {
+  padding: 1em;
+  background: #eee;
+  border-radius: 8px;
+  opacity: 0.5;
+}
+
+.phase.aktiv {
+  background: #222a3a;
+  color: white;
+  opacity: 1;
+}
+
+#buttons {
+  text-align: center;
+}
+
+#buttons button {
+  margin: 0 0.5em;
+}
+
+#karten {
+  display: flex;
+  justify-content: center;
+  gap: 0.7em;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 2em;
+  z-index: 10;
+}
+
+.karte {
+  width: 150px;
+  height: 270px;
+  border: 3px solid #222a3a;
+  border-radius: 30px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3em;
+  margin: 0;
+  box-sizing: border-box;
+  box-shadow: 0 2px 8px #0002;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.karte:hover {
+  border-color: yellow;
+  transform: scale(1.1) translateY(-20px);
+}
+
+.karte.ausgewaehlt {
+  border-color: #1e90ff;
+  background: #e6f0ff;
+  box-shadow: 0 4px 16px #1e90ff55;
+}
+
+button {
+  padding: 0.5em 1em;
+  font-size: 1em;
+  margin-top: 2em;
+}
+
+#karten > .karte:first-child {
+  rotate: -5deg;
+}
+
+#karten > .karte:last-child {
+  rotate: 5deg;
+}

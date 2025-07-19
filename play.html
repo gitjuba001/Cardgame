@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Kartenspiel: 5 zufällige Karten ziehen</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Kartenspiel</h1>
+  <div id="money" style="text-align: center; font-size: 1.2em; margin: 1em;"></div>
+  <div id="phasen">
+    <div class="phase aktiv">Phase 1: Karten ziehen</div>
+    <div class="phase">Phase 2: Karten austauschen</div>
+    <div class="phase">Phase 3: Werte auszählen</div>
+    <div class="phase">Phase 4: Spielende</div>
+  </div>
+  <div id="buttons">
+    <!-- Phase 1 -->
+    <button onclick="kartenZiehen()" id="ziehenBtn">5 Karten ziehen</button>
+    <!-- Phase 2 -->
+    <button onclick="ausgewaehlteNeuZiehen()" id="neuZiehenBtn" style="display:none">Ausgewählte Karten neu ziehen</button>
+    <button onclick="phase3()" id="fertigBtn" style="display:none">Fertig - Weiter zu Phase 3</button>
+    <!-- Phase 3 -->
+    <button onclick="auszaehlen()" id="auszaehlBtn" style="display:none">Hand auszählen</button>
+    <input type="number" id="betinput" placeholder="Einsatz" style="display:none">
+    <!-- Phase 4 -->
+    <button onclick="neuesSpiel()" id="neuesSpielBtn" style="display:none">Neues Spiel</button>
+  </div>
+  <div id="karten"></div>
+  <div id="auszaehlErgebnis" style="margin-top:1em;"></div>
+  <script src="deck.js"></script>
+  <script src="cards.js"></script>
+</body>
+</html>
