@@ -6,6 +6,3 @@ const deck = [
   "Joker"
 ];
 
-// Laden
-const gespeichertesDeck = JSON.parse(localStorage.getItem("deck"));
-console.log(gespeichertesDeck);

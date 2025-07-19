@@ -1,9 +1,12 @@
 // Spielvariablen
 var aktuellePhase = 1;
 var money = 100; // Startgeld
-var spieler2Einsatz = 50; // Fester Einsatz von Spieler 2
 var spieler2HandWert = 45; // Testwert für Spieler 2's Hand
 var kartenGetauscht = false; // Trackt ob Karten bereits getauscht wurden
+var aktuellerEinsatz = 0; // Aktueller Einsatz im Spiel
+var spieler1Einsatz = 0; // Einsatz von Spieler 1
+var spieler2Einsatz = 0; // Einsatz von Spieler 2
+var amZug = 'spieler2'; // Wer ist am Zug
 
 // Wenn die Seite geladen ist
 window.onload = function() {
@@ -35,8 +38,7 @@ function zeigePhase(nummer) {
   document.getElementById("ziehenBtn").style.display = nummer === 1 ? "" : "none";
   document.getElementById("neuZiehenBtn").style.display = nummer === 2 ? "" : "none";
   document.getElementById("fertigBtn").style.display = nummer === 2 ? "" : "none";
-  document.getElementById("betinput").style.display = nummer === 3 ? "" : "none";
-  document.getElementById("betBtn").style.display = nummer === 3 ? "" : "none";
+  document.getElementById("bettingArea").style.display = nummer === 3 ? "" : "none";
   document.getElementById("winOptions").style.display = "none"; // Immer ausblenden bei Phasenwechsel
   document.getElementById("auszaehlBtn").style.display = nummer === 4 ? "" : "none";
   document.getElementById("neuesSpielBtn").style.display = nummer === 5 ? "" : "none";
@@ -45,8 +47,64 @@ function zeigePhase(nummer) {
 }
 
 function phase3() {
-  zeigePhase(3);
-  document.getElementById("auszaehlErgebnis").innerText = "Spieler 2 setzt " + spieler2Einsatz + "€";
+    zeigePhase(3);
+    // Spieler 2 beginnt mit 5€
+    spieler2Einsatz = 5;
+    aktuellerEinsatz = 5;
+    amZug = 'spieler1';
+    updateBettingDisplay();
+    document.getElementById("auszaehlErgebnis").innerText = "Spieler 2 setzt " + spieler2Einsatz + "€";
+}
+
+function updateBettingDisplay() {
+    document.getElementById("currentBet").innerText = 
+        `Aktueller Einsatz: ${aktuellerEinsatz}€\n` +
+        `Spieler 1: ${spieler1Einsatz}€\n` +
+        `Spieler 2: ${spieler2Einsatz}€`;
+}
+
+function handleBet() {
+    var bet = parseInt(document.getElementById("betinput").value);
+    if (isNaN(bet) || bet <= aktuellerEinsatz) {
+        alert("Dein Einsatz muss höher als " + aktuellerEinsatz + "€ sein!");
+        return;
+    }
+    if (bet > money) {
+        alert("Du hast nicht genug Geld!");
+        return;
+    }
+
+    spieler1Einsatz = bet;
+    aktuellerEinsatz = bet;
+    amZug = 'spieler2';
+    updateBettingDisplay();
+    
+    // Simuliere Spieler 2's Reaktion
+    simulatePlayer2Response();
+}
+
+function simulatePlayer2Response() {
+    // Einfache Simulation: Spieler 2 passt bei Einsätzen über 20€
+    if (aktuellerEinsatz > 20) {
+        // Spieler 2 passt, Spieler 1 gewinnt Entscheidungsrecht
+        document.getElementById("bettingArea").style.display = "none";
+        document.getElementById("winOptions").style.display = "";
+    } else {
+        // Spieler 2 erhöht um 5€
+        spieler2Einsatz = aktuellerEinsatz + 5;
+        aktuellerEinsatz = spieler2Einsatz;
+        amZug = 'spieler1';
+        updateBettingDisplay();
+    }
+}
+
+function handlePass() {
+    // Spieler 1 passt, Spieler 2 erhält Entscheidungsrecht
+    document.getElementById("bettingArea").style.display = "none";
+    
+    // Spieler 2 trifft automatisch eine Entscheidung (simuliert)
+    let spieler2WaehltHoch = Math.random() < 0.5; // 50% Chance für hoch/niedrig
+    handleWinOption(spieler2WaehltHoch);
 }
 
 function handleBet() {
@@ -103,7 +161,8 @@ function auszaehlen() {
     
     // Vergleich mit Spieler 2
     var hoeheresBlattGewinnt = localStorage.getItem('hoeheresBlattGewinnt') === 'true';
-    var ergebnis = "Deine Hand: " + summe + "\nSpieler 2's Hand: " + spieler2HandWert;
+    var ergebnis = "Spielmodus: " + (hoeheresBlattGewinnt ? "Höheres" : "Niedrigeres") + " Blatt gewinnt\n";
+    ergebnis += "Deine Hand: " + summe + "\nSpieler 2's Hand: " + spieler2HandWert;
     
     if ((hoeheresBlattGewinnt && summe > spieler2HandWert) || (!hoeheresBlattGewinnt && summe < spieler2HandWert)) {
         ergebnis += "\nDu gewinnst!";
